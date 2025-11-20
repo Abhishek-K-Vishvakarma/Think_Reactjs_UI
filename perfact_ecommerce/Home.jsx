@@ -17,7 +17,7 @@ const Home = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const Profile = async () => {
-      if (!user) return;  // ❗ user null hai to API mat call karo
+      if (!user) return;
 
       try {
         const response = await fetch("https://think-api-task-2.onrender.com/api/profile", {
@@ -35,7 +35,6 @@ const Home = () => {
           setTimeout(() => navigate("/signin"), 900);
           return;
         }
-
         setData(result?.users?.user);
       } catch (err) {
         toast.error("Internal Server Error", err);
