@@ -48,24 +48,25 @@ const SignUp = () => {
         boxShadow: "0px 4px 12px rgba(0,0,0,0.3)",
         margin: 0,
         letterSpacing: "1px",
-        fontSize: "28px",
+        fontSize: "20px",
       }}>
         <Container>
           <Link to="/" className="text-white" style={{textDecoration: 'none'}}>Home Page</Link>
         </Container>
       </Navbar>
-      <form onSubmit={HandlePostSignup} className="container card form-group mt-5" style={{
-        height: '47rem', width: '25rem', boxShadow: '-6px 5px 5px 1px blue', borderRadius: '30px' }}>
-        <p style={{ width: '20px', height: '20px', background: 'black', borderRadius: '100px', marginTop: '10px' }}></p>
+      <form onSubmit={HandlePostSignup} className="container card form-group mt-5 w-75" style={{ padding: '20px', boxShadow: '0px 0px 5px 5px #999 inset', borderRadius: '20px' }}>
         <p className="text-center" style={{fontWeight: 'bold', color: 'blue'}}>Sign Up Page</p>
         <br/><br/>
         <label>Enter FullName</label>
-        <input type="text" ref={nmRef} className="form-control" style={{boxShadow: '0px 4px inset', padding: '12px'}}/><br/>
+        <input type="text" ref={nmRef} className="form-control" style={{ border: 'none', outline: 'none' }} /> 
+        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'blue' }}></div><br/>
         <label>Enter Email</label>
-        <input type="text" ref={emRef} className="form-control" style={{ boxShadow: '0px 4px inset', padding: '12px' }} /><br/>
+        <input type="text" ref={emRef} className="form-control" style={{ border: 'none', outline: 'none' }} /> 
+        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'blue' }}></div><br/>
         <label>Enter Password</label>
-        <input type="password" ref={passRef} className="form-control" style={{ boxShadow: '0px 4px inset', padding: '12px' }} /><br/>
-        <button type="submit" className="form-control" style={{ marginTop: '16rem', background: 'blue', fontWeight: 'bold', borderRadius: '20px', padding: '8px', color: 'white', border: 'none', overflow: 'hidden'}}>Sign Up</button>
+        <input type="password" ref={passRef} className="form-control" style={{ border: 'none', outline: 'none' }} />
+        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'blue' }}></div><br/>
+        <button type="submit" className="form-control mt-3" style={{ background: 'linear-gradient(to left, pink, red)', color: 'white', fontWeight: 'bold' }}>Sign Up</button>
       </form>
       <ToastContainer/>
     </div>

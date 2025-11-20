@@ -1,4 +1,4 @@
-import { Container, Navbar, Offcanvas } from "react-bootstrap";
+import { Container, Navbar, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import UserSubcategory from "./src/actionComponents/UserSubcategory";
@@ -10,6 +10,7 @@ import { authUser } from "./src/authentication/Authentication";
 import Spinner from 'react-bootstrap/Spinner';
 import { FaUserShield } from "react-icons/fa";
 import CloseButton from 'react-bootstrap/CloseButton';
+import Carousel from 'react-bootstrap/Carousel';
 const Home = () => {
   const [show, setShow] = useState(false);
   const { user } = authUser();
@@ -43,29 +44,43 @@ const Home = () => {
 
     Profile();
   }, [user]);
- 
-
+  console.log("Data :", data);
   return (
     <div>
       <Navbar style={{
         background: "linear-gradient(90deg, #1B20AB, #7A5AF8)",
         padding: "10px",
+        textAlign: "center",
         color: "white",
+        boxShadow: "0px 4px 12px rgba(0,0,0,0.3)",
+        margin: 0,
+        letterSpacing: "1px",
+        fontSize: "20px",
       }}>
         <Container>
-          <Link to="/" className="text-white d-flex align-items-center gap-2"><FaHome /> Home Page</Link>
+          <Link to="/" className="text-white d-flex align-items-center gap-2 text-decoration-none"><FaHome /> Home Page</Link>
           <button onClick={() => setShow(true)} style={{ background: "none", border: "none", color: "white" }}>
             <BiUser /> Profile
           </button>
         </Container>
       </Navbar>
-
-      <Offcanvas show={show} placement="end"className="d-flex" style={{height: '30rem', boxShadow: '-2px 2px 3px 2px #ccc'}}>
-        <button onClick={() => setShow(false)} className="mt-2" style={{ background: "none", border: "none", marginRight: '350px'}}><CloseButton/></button>
+      <Carousel className="w-75 d-flex align-items-center justify-content-center m-auto mt-5">
+        <Carousel.Item interval={1000}>
+          <img src="https://www.cloudways.com/blog/wp-content/uploads/ecommerce-website-checklist-b-.jpg" style={{ width: '100%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height: '36rem' }}/>
+        </Carousel.Item>
+        <Carousel.Item interval={2000}>
+          <img src="https://mediamindtechnology.com/wp-content/uploads/2023/05/Best-Practices-For-eCommerce-Website-Design.png" style={{ backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '36rem'}} />
+        </Carousel.Item>
+        <Carousel.Item interval={3000}>
+          <img src="https://colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-ecommerce-templates.png.webp" style={{ width: '100%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height: '36rem'}} />
+        </Carousel.Item>
+      </Carousel>
+      <Modal className="modal modal-blur fade" show={show}>
+        <button onClick={() => setShow(false)} className="mt-2" style={{ background: "none", border: "none",}}><CloseButton/></button>
         <br/>
         <div className="card">
           <p className="text-center fs-1" ><FaUserShield /></p>
-          <p className="text-center">Name: {data?.name} <Spinner variant="success" animation="grow" style={{width: '15px', height: '15px', marginTop: '-10px', position: 'absolute'}}/></p>
+          <p className="text-center">Name: {data?.name} {data == null ? <Spinner variant="danger" animation="grow" style={{ width: '15px', height: '15px' }} /> : <Spinner variant="success" animation="grow" style={{ width: '15px', height: '15px' }} />}</p>
           <p className="text-center">Email: {data?.email}</p>
         </div>
         <br />
@@ -77,7 +92,7 @@ const Home = () => {
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-      </Offcanvas>
+      </Modal>
       <UserSubcategory />
       <ToastContainer />
     </div>
