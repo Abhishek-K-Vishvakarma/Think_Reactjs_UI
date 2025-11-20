@@ -10,7 +10,7 @@ const UserLogout = () => {
         localStorage.removeItem("user");
         return;
     }
-    const request = await fetch("http://localhost:5002/api/logout", {
+    const request = await fetch("https://think-api-task-2.onrender.com/api/logout", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${ user }`,

@@ -20,7 +20,7 @@ const Administration = () => {
   const handleFalse = () => setShow(false);
 
   useEffect(() => {
-    fetch("http://localhost:5002/api/getuserscount")
+    fetch("https://think-api-task-2.onrender.com/api/getuserscount")
       .then(e => e.json())
       .then((data) => {
         console.log(data);
@@ -28,7 +28,7 @@ const Administration = () => {
       });
   }, []);
   useEffect(() => {
-    fetch("http://localhost:5002/api/getcategoriescount")
+    fetch("https://think-api-task-2.onrender.com/api/getcategoriescount")
       .then(e => e.json())
       .then((data) => {
         console.log(data);
@@ -37,7 +37,7 @@ const Administration = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5002/api/getsubcategoriescount")
+    fetch("https://think-api-task-2.onrender.com/api/getsubcategoriescount")
       .then(e => e.json())
       .then((data) => {
         console.log(data);
@@ -46,7 +46,7 @@ const Administration = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5002/api/getproductscount")
+    fetch("https://think-api-task-2.onrender.com/api/getproductscount")
       .then(e => e.json())
       .then((data) => {
         console.log(data);
@@ -124,12 +124,6 @@ const Administration = () => {
           </div>
         </div>
       </div>
-      {/* <div style={{display: 'flex', textAlign: 'center', gap: '20px'}}>
-        <p className="mt-4 text-center" style={{height: user, background: 'red', width: '10px'}}></p>
-        <p className="mt-4 text-center" style={{ height: categories, background: 'red', width: '10px' }}></p>
-        <p className="mt-4 text-center" style={{ height: subcategories, background: 'red', width: '10px' }}></p>
-        <p className="mt-4 text-center" style={{ height: products, background: 'red', width: '10px' }}></p>
-       </div> */}
     </div>
   )
 }

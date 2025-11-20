@@ -20,14 +20,14 @@ const Product = () => {
   }
 
   useEffect(() => {
-    fetch("http://localhost:5002/api/getcategories")
+    fetch("https://think-api-task-2.onrender.com/api/getcategories")
       .then(e => e.json())
       .then((data) => {
         setCategory(data?.data);
       })
   }, []);
   useEffect(() => {
-    fetch("  http://localhost:5002/api/getsubcategories")
+    fetch("https://think-api-task-2.onrender.com/api/getsubcategories")
       .then(e => e.json())
       .then((data) => {
         setSubCategory(data?.data);
@@ -38,7 +38,7 @@ const Product = () => {
     console.log(categoryId.current.value);
     console.log(subcategoryId.current.value);
     try {
-      const request = await fetch("http://localhost:5002/api/product", {
+      const request = await fetch("https://think-api-task-2.onrender.com/api/product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

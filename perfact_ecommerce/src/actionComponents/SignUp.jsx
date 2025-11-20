@@ -15,7 +15,7 @@ const SignUp = () => {
   const HandlePostSignup = async(e)=>{
     e.preventDefault();
     try{
-      const request = await fetch("http://localhost:5002/api/signup",{
+      const request = await fetch("https://think-api-task-2.onrender.com/api/signup",{
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -10,13 +10,13 @@ const UserProduct = () => {
   const {user} = authUser();
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("http://localhost:5002/api/getproducts")
+    fetch("https://think-api-task-2.onrender.com/api/getproducts")
       .then(e => e.json())
       .then((data) => {
         setProduct(data?.data);
       })
 
-    fetch("http://localhost:5002/api/user_admin")
+    fetch("https://think-api-task-2.onrender.com/api/user_admin")
       .then(e => e.json())
       .then((data) => {  
         console.log("data?.users_admin", data?.users_admin)      
@@ -32,7 +32,7 @@ const UserProduct = () => {
     console.log(e);
     
     try{
-      const req = await fetch("http://localhost:5002/api/postcart", {
+      const req = await fetch("https://think-api-task-2.onrender.com/api/postcart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

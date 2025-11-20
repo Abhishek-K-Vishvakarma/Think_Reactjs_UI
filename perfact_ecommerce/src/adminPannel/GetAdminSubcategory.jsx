@@ -11,7 +11,7 @@ const GetAdminSubCategory = () => {
   const [n, setN] = useState("");
   const [d, setD] = useState("");
   useEffect(() => {
-    fetch("http://localhost:5002/api/getsubcategories")
+    fetch("https://think-api-task-2.onrender.com/api/getsubcategories")
       .then(e => e.json())
       .then((data) => {
         setSubCategory(data?.data);
@@ -22,7 +22,7 @@ const GetAdminSubCategory = () => {
       return;
     }
     try {
-      const request = await fetch(`http://localhost:5002/api/delsubcategory/${id._id}`, {
+      const request = await fetch(`https://think-api-task-2.onrender.com/api/delsubcategory/${id._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json"
@@ -54,7 +54,7 @@ const GetAdminSubCategory = () => {
   const PutSubCategory = async (e) => {
     e.preventDefault();
     try {
-      const request = await fetch(`http://localhost:5002/api/putsubcategory/${id}`, {
+      const request = await fetch(`https://think-api-task-2.onrender.com/api/putsubcategory/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"

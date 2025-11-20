@@ -14,7 +14,7 @@ const SubCategory = () => {
     categoryId.current.value = "";
   }
   useEffect(()=>{
-    fetch("http://localhost:5002/api/getcategories")
+    fetch("https://think-api-task-2.onrender.com/api/getcategories")
     .then(e=> e.json())
     .then((data)=>{
      setCategory(data?.data);
@@ -23,7 +23,7 @@ const SubCategory = () => {
   const HandleCategory = async (e) => {
     e.preventDefault();
     try {
-      const request = await fetch("http://localhost:5002/api/subcategory", {
+      const request = await fetch("https://think-api-task-2.onrender.com/api/subcategory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

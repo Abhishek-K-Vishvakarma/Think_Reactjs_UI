@@ -13,7 +13,7 @@ const GetAdminProduct = () => {
   const [d, setD] = useState("");
   const [p, setP] = useState("");
   useEffect(() => {
-    fetch("http://localhost:5002/api/getProducts")
+    fetch("https://think-api-task-2.onrender.com/api/getProducts")
       .then(e => e.json())
       .then((data) => {
         setProduct(data?.data);
@@ -24,7 +24,7 @@ const GetAdminProduct = () => {
       return;
     }
     try {
-      const request = await fetch(`http://localhost:5002/api/delproduct/${ id._id }`, {
+      const request = await fetch(`https://think-api-task-2.onrender.com/api/delproduct/${id._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json"
@@ -58,7 +58,7 @@ const GetAdminProduct = () => {
   const PutProduct = async (e) => {
     e.preventDefault();
     try {
-      const request = await fetch(`http://localhost:5002/api/putproduct/${id}`, {
+      const request = await fetch(`https://think-api-task-2.onrender.com/api/putproduct/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"

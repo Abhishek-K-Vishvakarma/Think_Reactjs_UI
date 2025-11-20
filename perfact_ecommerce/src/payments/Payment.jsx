@@ -21,7 +21,7 @@ const PaymentSuccess = () => {
       handler: function (response) {
         console.log("Payment success:", response);
 
-        fetch("http://localhost:5002/api/payverify", {   // <-- YOUR BACKEND URL
+        fetch("https://think-api-task-2.onrender.com/api/payverify", {   // <-- YOUR BACKEND URL
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

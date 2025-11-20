@@ -13,7 +13,7 @@ const Category = () => {
   const HandleCategory = async (e) => {
     e.preventDefault();
     try {
-      const request = await fetch("http://localhost:5002/api/category", {
+      const request = await fetch("https://think-api-task-2.onrender.com/api/category", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

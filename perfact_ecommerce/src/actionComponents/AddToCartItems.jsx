@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 const AddToCartItems = () => {
   const [cart, setCart] = useState([]);
   useEffect(()=>{
-    fetch("http://localhost:5002/api/getcart")
+    fetch("https://think-api-task-2.onrender.com/api/getcart")
     .then(e=> e.json())
     .then((data)=>{
       console.log(data?.resCartData);
@@ -17,7 +17,7 @@ const AddToCartItems = () => {
   const DeleteOneCartItems = async(e)=>{
     console.log(e)
     try{
-      const request = await fetch(`http://localhost:5002/api/deletecart/${ e?._id }`, {
+      const request = await fetch(`https://think-api-task-2.onrender.com/api/deletecart/${ e?._id }`, {
         method: "DELETE",
       });
       const response = await request.json();

@@ -6,7 +6,7 @@ const UserSubcategory = () => {
   const { subcategorySender } = authUser();
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("http://localhost:5002/api/getsubcategories")
+    fetch("https://think-api-task-2.onrender.com/api/getsubcategories")
       .then(e => e.json())
       .then((data) => {
         setSubCategory(data?.data);

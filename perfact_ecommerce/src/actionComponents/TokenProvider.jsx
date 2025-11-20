@@ -3,7 +3,7 @@ const TokenProvider = () => {
   useEffect(() => {
     const Token = async () => {
       try {
-        const req = await fetch("http://localhost:5002/api/user_admin", {
+        const req = await fetch("https://think-api-task-2.onrender.com/api/user_admin", {
           method: "GET",
           credentials: "include",
         });

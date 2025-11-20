@@ -20,7 +20,7 @@ const Home = () => {
       if (!user) return;  // ❗ user null hai to API mat call karo
 
       try {
-        const response = await fetch("http://localhost:5002/api/profile", {
+        const response = await fetch("https://think-api-task-2.onrender.com/api/profile", {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${ user }`,
