@@ -28,8 +28,7 @@ const UserSubcategory = () => {
         {
           subcategory.map((e) => {
             return <>
-              <div key={e._id} className="card mt-2" onClick={() => sendSubcategory(e)} style={{ width: '15rem', height: '8rem', fontWeight: 'bold', boxShadow: '-3px 3px 5px 3px #ccc', cursor: 'pointer' }}>
-                <div style={{ height: '10px', background: 'linear-gradient(to right, blue, pink)', borderRadius: '20px' }}></div>
+              <div key={e._id} className="card p-5" onClick={() => sendSubcategory(e)} style={{cursor: 'pointer', boxShadow: '0px 0px 5px 2px #ccc', fontWeight: 'bold'}}>
                 <div>
                   <p className="text-center mt-5">{e.sub_name}</p>
                 </div>

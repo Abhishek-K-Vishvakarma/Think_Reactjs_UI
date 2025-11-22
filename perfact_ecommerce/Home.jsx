@@ -13,8 +13,8 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import Carousel from 'react-bootstrap/Carousel';
 const Home = () => {
   const [show, setShow] = useState(false);
-  const { user } = authUser();
   const [data, setData] = useState(null);
+  const { user } = authUser();
   const navigate = useNavigate();
   useEffect(() => {
     const Profile = async () => {
@@ -44,7 +44,6 @@ const Home = () => {
 
     Profile();
   }, [user]);
-  console.log("Data :", data);
   return (
     <div>
       <Navbar style={{
@@ -55,16 +54,17 @@ const Home = () => {
         boxShadow: "0px 4px 12px rgba(0,0,0,0.3)",
         margin: 0,
         letterSpacing: "1px",
-        fontSize: "20px",
+        fontSize: "16px",
       }}>
         <Container>
-          <Link to="/" className="text-white d-flex align-items-center gap-2 text-decoration-none"><FaHome /> Home Page</Link>
+          <Link to="/" className="text-white d-flex align-items-center gap-1 text-decoration-none"><FaHome /> Home Page</Link>
+          <Link to="/addtocart" className="text-white d-flex align-items-center gap-1 text-decoration-none">Add To Page</Link>
           <button onClick={() => setShow(true)} style={{ background: "none", border: "none", color: "white" }}>
             <BiUser /> Profile
           </button>
         </Container>
       </Navbar>
-      <Carousel className="w-75 d-flex align-items-center justify-content-center m-auto mt-5">
+      <Carousel className="d-flex align-items-center justify-content-center m-auto mt-5">
         <Carousel.Item interval={1000}>
           <img src="https://www.cloudways.com/blog/wp-content/uploads/ecommerce-website-checklist-b-.jpg" style={{ width: '100%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height: '36rem' }}/>
         </Carousel.Item>
@@ -82,6 +82,7 @@ const Home = () => {
           <p className="text-center fs-1" ><FaUserShield /></p>
           <p className="text-center">Name: {data?.name} {data == null ? <Spinner variant="danger" animation="grow" style={{ width: '15px', height: '15px' }} /> : <Spinner variant="success" animation="grow" style={{ width: '15px', height: '15px' }} />}</p>
           <p className="text-center">Email: {data?.email}</p>
+          <p className="text-center">Role: <b className="text-success">{data?.role}</b></p>
         </div>
         <br />
         <Accordion defaultActiveKey={0}>
@@ -90,7 +91,7 @@ const Home = () => {
             <Accordion.Body>
               <Link to="/ulogout">Logout</Link>
             </Accordion.Body>
-          </Accordion.Item>
+          </Accordion.Item>g
         </Accordion>
       </Modal>
       <UserSubcategory />

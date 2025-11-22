@@ -77,6 +77,8 @@ const GetAdminSubCategory = () => {
       console.error("Internal Server error :", error);
     }
   }
+  console.log(subcategory);
+  
   return (
     <div>
       <Navbar style={{
@@ -99,6 +101,7 @@ const GetAdminSubCategory = () => {
             subcategory.map((e, i) => {
               return <>
                 <div key={i} className="card px-3 p-5 mt-4" style={{ margin: '5px', boxShadow: '-5px 5px 5px 2px #ccc' }}>
+                  <img src={e?.sub_img_url} style={{width: '15rem', height: '12rem'}}/><br/>
                   <p><b>SubcategoryName</b>: {e.sub_name}</p>
                   <p><b>Description</b>: {e.description}</p>
                   <div className="row">

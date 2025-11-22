@@ -6,6 +6,7 @@ const SubCategory = () => {
   const nmRef = useRef();
   const desRef = useRef();
   const categoryId = useRef();
+  const sub_img_urlRef = useRef();
   const [category, setCategory] = useState([]);
   const navigate = useNavigate();
   const ResetForm = () => {
@@ -22,20 +23,20 @@ const SubCategory = () => {
   },[]);
   const HandleCategory = async (e) => {
     e.preventDefault();
+    const file = sub_img_urlRef.current.value;
+    console.log(file)
+    const formData = new FormData();
+    formData.append("sub_name", nmRef.current.value);
+    formData.append("description", desRef.current.value);
+    formData.append("category", categoryId.current.value);
+    formData.append("cloudimage", file);
     try {
       const request = await fetch("https://think-api-task-2.onrender.com/api/subcategory", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          sub_name: nmRef.current.value,
-          description: desRef.current.value,
-          categoryId: categoryId.current.value
-        })
+        formData
       });
       const response = await request.json();
-      if(request.status == 400){
+      if(request.status == 500){
          toast.error(response.message);
       }else{
          toast.success(response.message);
@@ -72,9 +73,11 @@ const SubCategory = () => {
             <input type="text" ref={nmRef} className="form-control p-2 fs-5" /><br />
             <label style={{ fontWeight: 'bold' }}>Enter Description</label>
             <textarea type="text" ref={desRef} className="form-control p-2 fs-5" /><br />
-            <label style={{ fontWeight: 'bold' }}>Choose Category</label>
+            <label>Choose Image</label>
+            <input type="file" accept="/*" ref={sub_img_urlRef} className="form-control p-2 fs-5"/>
+            <label className="mt-4">Choose Category</label>
             <select type="text" ref={categoryId} className="form-control p-2 fs-5">
-             <option value="">Choose Category</option>
+            <option value="">Choose Category</option>
              {
               category.map((e, i)=>{
                 return<div key={i}>

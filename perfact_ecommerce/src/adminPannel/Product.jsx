@@ -8,6 +8,7 @@ const Product = () => {
   const categoryId = useRef();
   const subcategoryId = useRef();
   const priceRef = useRef();
+  // const productImageRef = useRef();
   const [category, setCategory] = useState([]);
   const [subcategory, setSubCategory] = useState([]);
   const navigate = useNavigate();
@@ -35,24 +36,30 @@ const Product = () => {
   }, []);
   const HandleCategory = async (e) => {
     e.preventDefault();
-    console.log(categoryId.current.value);
-    console.log(subcategoryId.current.value);
+    // const file = productImageRef.current.value;
+    // const formData = new FormData();
+    // formData.append("p_name", nmRef.current.value);
+    // formData.append("description", desRef.current.value);
+    // formData.append("categoryId", categoryId.current.value);
+    // formData.append("subcategoryId", subcategoryId.current.value);
+    // formData.append("price", priceRef.current.value);
+    // formData.append("cloudimage", file);
     try {
       const request = await fetch("https://think-api-task-2.onrender.com/api/product", {
         method: "POST",
-        headers: {
+        headers:{
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           p_name: nmRef.current.value,
+          price: priceRef.current.value,
           description: desRef.current.value,
           categoryId: categoryId.current.value,
-          price: priceRef.current.value,
           subcategoryId: subcategoryId.current.value
         })
       });
       const response = await request.json();
-      if (request.status == 400) {
+      if (request.status == 500) {
         toast.error(response.message);
       } else {
         toast.success(response.message);
@@ -91,6 +98,8 @@ const Product = () => {
             <input type="number" ref={priceRef} className="form-control p-2 fs-5" /><br />
             <label style={{ fontWeight: 'bold' }}>Enter Description</label>
             <textarea type="text" ref={desRef} className="form-control p-2 fs-5" /><br />
+            {/* <label>Choose Image File</label>
+            <input type="file" accept="/*" ref={productImageRef} className="form-control p-2"/><br/> */}
             <label style={{ fontWeight: 'bold' }}>Choose Category</label>
             <select type="text" ref={categoryId} className="form-control p-2 fs-5">
               <option value="">Choose Category</option>

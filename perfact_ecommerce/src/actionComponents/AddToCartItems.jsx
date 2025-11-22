@@ -2,22 +2,45 @@ import { useEffect, useState } from "react";
 import { Container, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { authUser } from "../authentication/Authentication";
 
 const AddToCartItems = () => {
   const [cart, setCart] = useState([]);
+    const { user } = authUser();
+    const [data, setData] = useState(null);
   useEffect(()=>{
     fetch("https://think-api-task-2.onrender.com/api/getcart")
     .then(e=> e.json())
     .then((data)=>{
-      console.log(data?.resCartData);
       setCart(data?.resCartData);
     })
   }, []);
 
+  useEffect(() => {
+    const Profile = async () => {
+      if (!user) return;
+
+      try {
+        const response = await fetch("https://think-api-task-2.onrender.com/api/profile", {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${ user }`,
+          },
+          credentials: "include"
+        });
+
+        const result = await response.json();
+        setData(result?.users?.user);
+      } catch (err) {
+        toast.error("Internal Server Error", err);
+      }
+    };
+    Profile();
+  }, [user]);
   const DeleteOneCartItems = async(e)=>{
     console.log(e)
     try{
-      const request = await fetch(`https://think-api-task-2.onrender.com/api/deletecart/${ e?._id }`, {
+      const request = await fetch(`https://think-api-task-2.onrender.com/api/deletecart/${e?._id}`, {
         method: "DELETE",
       });
       const response = await request.json();
@@ -32,7 +55,9 @@ const AddToCartItems = () => {
        console.error("Internal Server error :", err);
     }
   }
-
+  const carts = cart.filter((u)=>{
+    return u?.user?._id == data?._id;
+  })
   return (
     <div>
       <Navbar style={{
@@ -43,15 +68,16 @@ const AddToCartItems = () => {
         boxShadow: "0px 4px 12px rgba(0,0,0,0.3)",
         margin: 0,
         letterSpacing: "1px",
-        fontSize: "28px",
+        fontSize: "18px",
       }}>
         <Container>
           <Link to="/" className="text-white" style={{ textDecoration: 'none' }}>Home Page</Link>
+          <Link className="text-white" style={{ textDecoration: 'none' }}>Cart Items</Link>
         </Container>
       </Navbar>
       <div className="container">
         {
-          cart.map((e) => {
+          carts.map((e) => {
             return <>
               <div className="card py-5 px-5 mt-3" style={{boxShadow: '-2px 2px 3px 2px #ccc'}}>
                 <h4>Customer : {e?.user?.name}</h4>

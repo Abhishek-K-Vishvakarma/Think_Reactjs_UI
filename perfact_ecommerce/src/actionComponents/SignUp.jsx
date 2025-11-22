@@ -54,19 +54,19 @@ const SignUp = () => {
           <Link to="/" className="text-white" style={{textDecoration: 'none'}}>Home Page</Link>
         </Container>
       </Navbar>
-      <form onSubmit={HandlePostSignup} className="container card form-group mt-5 w-75" style={{ padding: '20px', boxShadow: '0px 0px 5px 5px #999 inset', borderRadius: '20px' }}>
+      <form onSubmit={HandlePostSignup} className="container card form-group mt-5 w-75" style={{ padding: '20px', boxShadow: '0px 0px 5px 5px #ccc', borderRadius: '20px' }}>
         <p className="text-center" style={{fontWeight: 'bold', color: 'blue'}}>Sign Up Page</p>
         <br/><br/>
         <label>Enter FullName</label>
         <input type="text" ref={nmRef} className="form-control" style={{ border: 'none', outline: 'none' }} /> 
-        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'blue' }}></div><br/>
+        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'red' }}></div><br/>
         <label>Enter Email</label>
         <input type="text" ref={emRef} className="form-control" style={{ border: 'none', outline: 'none' }} /> 
-        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'blue' }}></div><br/>
+        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'red' }}></div><br/>
         <label>Enter Password</label>
         <input type="password" ref={passRef} className="form-control" style={{ border: 'none', outline: 'none' }} />
-        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'blue' }}></div><br/>
-        <button type="submit" className="form-control mt-3" style={{ background: 'linear-gradient(to left, pink, red)', color: 'white', fontWeight: 'bold' }}>Sign Up</button>
+        <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'red' }}></div><br/>
+        <button type="submit" className="form-control mt-5" style={{ background: 'linear-gradient(to left, pink, red)', color: 'white', fontWeight: 'bold' }}>Sign Up</button>
       </form>
       <ToastContainer/>
     </div>

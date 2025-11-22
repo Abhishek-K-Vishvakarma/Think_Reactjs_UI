@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Container, Navbar } from "react-bootstrap";
+import { Container, Modal, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 const GetAdminProduct = () => {
@@ -12,6 +12,7 @@ const GetAdminProduct = () => {
   const [n, setN] = useState("");
   const [d, setD] = useState("");
   const [p, setP] = useState("");
+  const [showmodal, setShowModal] = useState(false);
   useEffect(() => {
     fetch("https://think-api-task-2.onrender.com/api/getProducts")
       .then(e => e.json())
@@ -53,6 +54,7 @@ const GetAdminProduct = () => {
     setD(e.description);
     setP(e.price)
     setId(e._id);
+    setShowModal(true);
   }
 
   const PutProduct = async (e) => {
@@ -104,6 +106,7 @@ const GetAdminProduct = () => {
             product.map((e) => {
               return <>
                 <div key={e._id} className="card px-3 p-5 mt-4" style={{ margin: '5px', boxShadow: '-5px 5px 5px 2px #ccc' }}>
+                  <img src={e.product_img_url} style={{width: '15rem', height: '12rem'}}/><br/>
                   <p><b>ProductName</b>: {e.p_name}</p>
                   <p><b>Price</b>: {e.price}</p>
                   <p><b>Description</b>: {e.description}</p>
@@ -121,23 +124,26 @@ const GetAdminProduct = () => {
           }
         </div>
       </div>
-      <div className="container">
-        {
-          n != ""
-            ?
-            <form onSubmit={PutProduct} className="card p-5" style={{ boxShadow: '-5px 5px 5px 2px #ccc' }}>
-              <label>ProductName</label>
-              <input type="text" className="form-control" ref={nmRef} value={n} onChange={(e) => setN(e.target.value)} /><br />
-              <label>Description</label>
-              <input type="text" className="form-control" ref={desRef} value={d} onChange={(e) => setD(e.target.value)} /><br />
-              <label>Price</label>
-              <input type="number" className="form-control" ref={priceRef} value={p} onChange={(e) => setP(e.target.value)} /><br />
-              <button type="submit" className="form-control" style={{ background: "linear-gradient(90deg, #1B20AB, #7A5AF8)", color: 'white', fontWeight: 'bold' }}>Save</button>
-            </form>
-            :
-            null
-        }
-      </div>
+      <Modal show={showmodal}>
+        <button onClick={() => setShowModal(false)} className="btn-close mt-2 p-2 ms-auto"></button>
+        <div>
+          {
+            n != ""
+              ?
+              <form onSubmit={PutProduct} className="card p-5">
+                <label>ProductName</label>
+                <input type="text" className="form-control" ref={nmRef} value={n} onChange={(e) => setN(e.target.value)} /><br />
+                <label>Description</label>
+                <input type="text" className="form-control" ref={desRef} value={d} onChange={(e) => setD(e.target.value)} /><br />
+                <label>Price</label>
+                <input type="number" className="form-control" ref={priceRef} value={p} onChange={(e) => setP(e.target.value)} /><br />
+                <button type="submit" className="form-control" style={{ background: "linear-gradient(90deg, #1B20AB, #7A5AF8)", color: 'white', fontWeight: 'bold' }}>Save</button>
+              </form>
+              :
+              null
+          }
+        </div>
+      </Modal>
       <ToastContainer />
     </div>
   )

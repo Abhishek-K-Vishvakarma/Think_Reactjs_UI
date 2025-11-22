@@ -62,7 +62,7 @@ const UserProduct = () => {
         boxShadow: "0px 4px 12px rgba(0,0,0,0.3)",
         margin: 0,
         letterSpacing: "1px",
-        fontSize: "28px",
+        fontSize: "18px",
       }}>
         <Container>
           <Link to="/" className="text-white" style={{ textDecoration: 'none' }}>Home Page</Link>
