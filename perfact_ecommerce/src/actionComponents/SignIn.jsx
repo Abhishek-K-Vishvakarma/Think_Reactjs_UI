@@ -48,9 +48,9 @@ const SignIn = () => {
             navigate("/admin");
             setSpin(false);
           }, 2000);
+          ResetForm();
         }
       }
-      ResetForm();
     } catch (error) {
       console.error("Internal Server :", error);
     }
@@ -81,7 +81,7 @@ const SignIn = () => {
         <input type="password" ref={passRef} className="form-control" style={{ border: 'none', outline: 'none' }} />
         <div style={{ height: '2px', color: 'blue', width: '100%', backgroundColor: 'red' }}></div><br /><br/>
         <button type="submit" className="form-control" style={{ background: 'linear-gradient(to left, pink, red)', color: 'white', fontWeight: 'bold' }}>Sign In</button>
-        {spin == true ? <Spinner animation="border" variant="dark" className="text-center" style={{ margin: 'auto' }} /> : null}
+        {spin == true ? <Spinner animation="border" variant="dark" className="text-center mt-2" style={{display: 'flex' ,margin: 'auto' }} /> : null}
         <br/>
         <p style={{fontSize: '12px', fontWeight: 'bold'}}>Use this for (Create Account) <Link to="/signup" style={{ textDecoration: 'none' }}>Sign up</Link></p>
       </form>

@@ -11,15 +11,18 @@ import Spinner from 'react-bootstrap/Spinner';
 import { FaUserShield } from "react-icons/fa";
 import CloseButton from 'react-bootstrap/CloseButton';
 import Carousel from 'react-bootstrap/Carousel';
+import { MdArrowDropDown } from "react-icons/md";
+import { FaUserEdit } from "react-icons/fa";
 const Home = () => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState(null);
+  const [shippshow, setShippShow] = useState(false);
   const { user } = authUser();
   const navigate = useNavigate();
+  const [shippdata, setShippData] = useState(null);
   useEffect(() => {
     const Profile = async () => {
       if (!user) return;
-
       try {
         const response = await fetch("https://think-api-task-2.onrender.com/api/profile", {
           method: "GET",
@@ -30,7 +33,6 @@ const Home = () => {
         });
 
         const result = await response.json();
-        console.log(result)
         if (result.status_code === 403) {
           toast.error("Session expired, Please Signin now");
           setTimeout(() => navigate("/signin"), 900);
@@ -44,6 +46,20 @@ const Home = () => {
 
     Profile();
   }, [user]);
+
+  useEffect(() => {
+    if (!data?._id) return;
+    fetch(`http://localhost:5002/api/shipping/${data._id}`)
+      .then(res => res.json())
+      .then((result) => {
+        console.log(result);
+        setShippData(result?.data);
+        if (result?.status === false) {
+          navigate("/shipping");
+        }
+      });
+  }, [data]);
+
   return (
     <div>
       <Navbar style={{
@@ -57,14 +73,15 @@ const Home = () => {
         fontSize: "16px",
       }}>
         <Container>
-          <Link to="/" className="text-white d-flex align-items-center gap-1 text-decoration-none"><FaHome /> Home Page</Link>
-          <Link to="/addtocart" className="text-white d-flex align-items-center gap-1 text-decoration-none">Add To Page</Link>
-          <button onClick={() => setShow(true)} style={{ background: "none", border: "none", color: "white" }}>
-            <BiUser /> Profile
+          <Link to="/" className="text-white d-flex align-items-center gap-1 text-decoration-none w-25" style={{fontWeight: 'bold'}}><FaHome />Home</Link>
+          <Link onClick={() => setShippShow(true)} className="text-white d-flex align-items-center text-decoration-none" style={{ fontWeight: 'bold' }}><MdArrowDropDown className="fs-2"/> Dear</Link>
+          <Link to="/addtocart" className="text-white d-flex align-items-center text-decoration-none" style={{ fontWeight: 'bold' }}>Cart</Link>
+          <button className="text-white d-flex align-items-center text-decoration-none" onClick={() => setShow(true)} style={{ background: "none", border: "none", color: "white", fontWeight: 'bold'}}>
+            <BiUser className="fs-3"/> Profile
           </button>
         </Container>
       </Navbar>
-      <Carousel className="d-flex align-items-center justify-content-center m-auto mt-5">
+      <Carousel className="d-flex align-items-center justify-content-center m-auto">
         <Carousel.Item interval={1000}>
           <img src="https://www.cloudways.com/blog/wp-content/uploads/ecommerce-website-checklist-b-.jpg" style={{ width: '100%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height: '36rem' }}/>
         </Carousel.Item>
@@ -82,7 +99,7 @@ const Home = () => {
           <p className="text-center fs-1" ><FaUserShield /></p>
           <p className="text-center">Name: {data?.name} {data == null ? <Spinner variant="danger" animation="grow" style={{ width: '15px', height: '15px' }} /> : <Spinner variant="success" animation="grow" style={{ width: '15px', height: '15px' }} />}</p>
           <p className="text-center">Email: {data?.email}</p>
-          <p className="text-center">Role: <b className="text-success">{data?.role}</b></p>
+          <p className="text-center">Role: <b className="text-success">{shippdata?.role}</b></p>
         </div>
         <br />
         <Accordion defaultActiveKey={0}>
@@ -91,8 +108,26 @@ const Home = () => {
             <Accordion.Body>
               <Link to="/ulogout">Logout</Link>
             </Accordion.Body>
-          </Accordion.Item>g
+          </Accordion.Item>
         </Accordion>
+      </Modal>
+      <Modal show={shippshow}>
+        <div className="d-flex">
+          <button className="btn-close mt-2 ms-2" onClick={() => setShippShow(false)}></button>
+          <button className="ms-auto me-2 mt-2" style={{border: 'none', boxShadow: '-2px 2px 4px 1px #ccc'}}>Edit <FaUserEdit className="" style={{ cursor: 'pointer'}} /></button>
+        </div>
+        <h3 className="text-center mt-2">Customer ShippingAddress Details</h3>
+        <hr/>
+        <div className="p-4">
+        <p><b>FullName:</b> {shippdata?.fullName}</p>
+        <p><b>Contact:</b> {shippdata?.contactNumber}</p>
+        <p><b>Street:</b> {shippdata?.street}</p>
+        <p><b>LandMark:</b> {shippdata?.landMark}</p>
+        <p><b>City:</b> {shippdata?.city}</p>
+        <p><b>PostalCode:</b> {shippdata?.postalCode}</p>
+        <p><b>Country:</b> {shippdata?.country}</p>
+        <p className="d-flex"><b>Role:</b> &nbsp;<p className="text-success" style={{fontWeight: 'bold'}}>{shippdata?.role}</p></p>
+        </div>
       </Modal>
       <UserSubcategory />
       <ToastContainer />

@@ -17,6 +17,8 @@ import TokenProvider from "./actionComponents/TokenProvider";
 import Authentication from "./authentication/Authentication";
 import AdminLogout from "./adminPannel/AdminLogout";
 import AddToCartItems from "./actionComponents/AddToCartItems";
+import CustomerShippingAddress from "./actionComponents/CustomerShippingAddress";
+import UserProductOrder from "./actionComponents/UserProductOrder";
 function App() {
   return (
     <>
@@ -40,6 +42,8 @@ function App() {
             <Route path="/token" element={<TokenProvider />}></Route>
             <Route path="/adminlogout" element={<AdminLogout/>}></Route>
             <Route path="/addtocart" element={<AddToCartItems />}></Route>
+            <Route path="/order" element={<UserProductOrder />}></Route>
+            <Route path="/shipping" element={<CustomerShippingAddress />}></Route>
           </Routes>
         </BrowserRouter>
       </Authentication>

@@ -82,7 +82,8 @@ const AddToCartItems = () => {
               <div className="card py-5 px-5 mt-3" style={{boxShadow: '-2px 2px 3px 2px #ccc'}}>
                 <h4>Customer : {e?.user?.name}</h4>
                 <br/>
-                <p><b>Product: </b>{e?.product?.p_name}</p>
+                <img src={e?.product_img_url} style={{width: '12rem', height: '12rem'}}/>
+                <p className="mt-2"><b>Product: </b>{e?.product?.p_name}</p>
                 <p><b>Price: </b>{e?.product?.price}</p>
                 <p><b>Description: </b>{e?.product?.description}</p>
                 <button onClick={() => DeleteOneCartItems(e)} style={{border: 'none', background: 'linear-gradient(to left, blue, pink)', padding: '8px', color: 'white', fontWeight: 'bold'}}>Delete</button>

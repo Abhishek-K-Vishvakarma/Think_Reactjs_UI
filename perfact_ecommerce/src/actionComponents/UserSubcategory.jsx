@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authUser } from "../authentication/Authentication";
 import { SlTag } from "react-icons/sl";
+import { HiBadgeCheck } from "react-icons/hi";
 
 const UserSubcategory = () => {
   const [subcategory, setSubCategory] = useState([]);
@@ -21,21 +22,27 @@ const UserSubcategory = () => {
   }
   return (
     <div>
-      <div>
-        <h3 className="mt-5 ms-5">#Exclusive Brands shell <SlTag className="text-success"/></h3>
-      </div>
-      <div className="container gap-3" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        {
-          subcategory.map((e) => {
-            return <>
-              <div key={e._id} className="card p-5" onClick={() => sendSubcategory(e)} style={{cursor: 'pointer', boxShadow: '0px 0px 5px 2px #ccc', fontWeight: 'bold'}}>
-                <div>
-                  <p className="text-center mt-5">{e.sub_name}</p>
-                </div>
+      <h3 className="mt-5 ms-5">
+        #Exclusive Brands shell <SlTag className="text-success" />
+      </h3>
+
+      <div className="container mt-4">
+        <div className="row">
+
+          {subcategory.map((e) => (
+            <div key={e._id} className="col-md-6 mb-4">
+              <div className="card p-3 text-center border-0">
+                <p style={{boxShadow: '-2px 2px 5px 2px #ccc', fontSize: '28px', color: 'red'}}><HiBadgeCheck/></p>
+                <img
+                  src={e.sub_img_url}
+                  className="img-fluid"
+                  style={{ width: "25rem", height: "10rem", margin: "auto", boxShadow: '-2px 2px 5px 2px #ccc'}}
+                />
+                <h5 className="mt-3 p-2" style={{ boxShadow: '-2px 2px 5px 1px #ccc', cursor: 'pointer'}} onClick={() => sendSubcategory(e)}>{e.sub_name}</h5>
               </div>
-            </>
-          })
-        }
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
