@@ -16,7 +16,7 @@ const UserProductOrder = () => {
     e.preventDefault();
     const orderObject = {
       userId: shippdata?.user,
-      items: [{ product: product?._id, quantity: qty, price : product?.price * qty}],
+      items: [{ product: product?._id, name: product?.p_name, quantity: qty, price: product?.price, totalAmount: parseInt(product?.price * product?.quantity) }],
       ShippingAddress: {
         fullName: shippdata?.fullName,
         landMark: shippdata?.landMark,
@@ -37,61 +37,65 @@ const UserProductOrder = () => {
         body: JSON.stringify(orderObject)
       });
       const response = await request.json();
-      console.log(request, response);
+      if (request.status == false) {
+        toast.error(response.message);
+      } else {
+        toast.success(response.message);
+      }
     } catch (err) {
       console.error("Internal Server error :", err);
     }
   }
-    let array = []
-    for(let i = 1; i < product?.p_qty; i++){
-        array.push(i);
-     }
+  let array = []
+  for (let i = 1; i < product?.p_qty; i++) {
+    array.push(i);
+  }
   useEffect(() => {
-      const Profile = async () => {
-        if (!user) return;
-        try {
-          const response = await fetch("https://think-api-task-2.onrender.com/api/profile", {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${ user }`,
-            },
-            credentials: "include"
-          });
-  
-          const result = await response.json();
-          if (result.status_code === 403) {
-            toast.error("Session expired, Please Signin now");
-            setTimeout(() => navigate("/signin"), 900);
-            return;
-          }
-          setData(result?.users?.user);
-        } catch (err) {
-          toast.error("Internal Server Error", err);
-        }
-      };
-  
-      Profile();
-    }, [user]);
-  
-    useEffect(() => {
-      if (!data?._id) return;
-      fetch(`https://think-api-task-2.onrender.com/api/shipping/${data._id}`)
-        .then(res => res.json())
-        .then((result) => {
-          console.log(result);
-          setShippData(result?.data);
-          if (result?.status === false) {
-            navigate("/shipping");
-          }
+    const Profile = async () => {
+      if (!user) return;
+      try {
+        const response = await fetch("https://think-api-task-2.onrender.com/api/profile", {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${ user }`,
+          },
+          credentials: "include"
         });
-    }, [data]);
-    
-    const d = new Date();
-    const y = d.getFullYear();
-    const m = d.getMonth();
-    const ds = d.getDate();
-    const date = `${ds}-${m}-${y}`;
-    console.log(qty);
+
+        const result = await response.json();
+        if (result.status_code === 403) {
+          toast.error("Session expired, Please Signin now");
+          setTimeout(() => navigate("/signin"), 900);
+          return;
+        }
+        setData(result?.users?.user);
+      } catch (err) {
+        toast.error("Internal Server Error", err);
+      }
+    };
+
+    Profile();
+  }, [user]);
+
+  useEffect(() => {
+    if (!data?._id) return;
+    fetch(`https://think-api-task-2.onrender.com/api/shipping/${ data._id }`)
+      .then(res => res.json())
+      .then((result) => {
+        console.log(result);
+        setShippData(result?.data);
+        if (result?.status === false) {
+          navigate("/shipping");
+        }
+      });
+  }, [data]);
+
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = d.getMonth();
+  const ds = d.getDate();
+  const date = `${ ds }-${ m }-${ y }`;
+  console.log(qty);
   return (
     <div>
       <Navbar style={{
@@ -112,43 +116,43 @@ const UserProductOrder = () => {
         <br />
         <h3 className="text-center">Product Place Order Page</h3>
         <br />
-        <div className="card p-1 w-75" style={{ boxShadow: '-3px 3px 5px 2px #ccc', background: 'orange', margin: 'auto'}}>
+        <div className="card p-1 w-75" style={{ boxShadow: '-3px 3px 5px 2px #ccc', background: 'orange', margin: 'auto' }}>
           <div className="card">
             <br />
             <div className="d-flex text-success">
               <p className="ms-1 text-dark">Customer Details</p>
               <p className="ms-5 ms-auto">Order Date: {date}</p>
-              <SlBadge className="text-warning me-2 fs-1"/>
+              <SlBadge className="text-warning me-2 fs-1" />
             </div>
             <p style={{ background: 'orange', height: '2px', width: '100%' }}></p>
             <div className="card p-5 w-100 ms-auto border-0">
-             <div className="row">
-                <div className="col-3 w-100" style={{display: 'inline-block'}}>
+              <div className="row">
+                <div className="col-3 w-100" style={{ display: 'inline-block' }}>
                   <p><b>FullName:</b> {shippdata?.fullName}</p>
                   <p><b>Contact:</b> {shippdata?.contactNumber}</p>
-              </div>
+                </div>
                 <div className="col-3 w-100" style={{ display: 'inline-block' }}>
                   <p><b>Street:</b> {shippdata?.street}</p>
                   <p><b>LandMark:</b> {shippdata?.landMark}</p>
-              </div>
+                </div>
                 <div className="col-3 w-100">
                   <p><b>City:</b> {shippdata?.city}</p>
                   <p><b>PostalCode:</b> {shippdata?.postalCode}</p>
-              </div>
+                </div>
                 <div className="col-3 w-100">
                   <p><b>Country:</b> {shippdata?.country}</p>
                   <p><b>Role:</b> {shippdata?.role}</p>
+                </div>
               </div>
-             </div>
               <p style={{ background: 'orange', height: '2px', width: '100%' }}></p>
-              <p className="ms-auto" style={{ background: '#E43A36', color: 'white', fontWeight: 'bold', padding: '2px 10px', fontSize: '12px'}}>Limited Time Deal</p>
-              <img src={product?.product_img_url} style={{ width: '10rem', height: '12rem', boxShadow: '0px 0px 5px 2px #ccc'}} />
+              <p className="ms-auto" style={{ background: '#E43A36', color: 'white', fontWeight: 'bold', padding: '2px 10px', fontSize: '12px' }}>Limited Time Deal</p>
+              <img src={product?.product_img_url} style={{ width: '10rem', height: '12rem', boxShadow: '0px 0px 5px 2px #ccc' }} />
               <p className="mt-2 d-inline-block m5-4"><b>Product Name:</b>&nbsp;{product?.p_name}</p>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <p><strong>Price : ₹</strong> {product?.price}</p>&nbsp;&nbsp;&nbsp;
-                <div style={{borderRadius: '20px', width: '10rem', border: '2px solid orange', display: 'flex', padding: '5px'}}>
+                <div style={{ borderRadius: '20px', width: '10rem', border: '2px solid orange', display: 'flex', padding: '5px' }}>
                   <button className="m-auto border-warning">-</button>&nbsp;&nbsp;
-                  <select value={qty} onChange={(e)=> setQty(e.target.value)}>
+                  <select value={qty} onChange={(e) => setQty(e.target.value)}>
                     {
                       array.map((ele) => {
                         return <>
@@ -163,7 +167,7 @@ const UserProductOrder = () => {
               <p className="mt-1"><b>Description:</b> {product?.description}</p>
               <h4 className="ms-auto">Total: ₹ {parseInt(product?.price * qty)}</h4>
               <p style={{ background: 'orange', height: '2px', width: '100%' }}></p>
-              <button onClick={HandleOrder} className="btn ms-auto" style={{background: 'orange', color: 'white', fontWeight: 'bold', boxShadow: '0px 0px 5px 1px #ccc'}}>Proceed To Pay</button>
+              <button onClick={HandleOrder} className="btn ms-auto" style={{ background: 'orange', color: 'white', fontWeight: 'bold', boxShadow: '0px 0px 5px 1px #ccc' }}>Proceed To Pay</button>
             </div>
           </div>
         </div>
