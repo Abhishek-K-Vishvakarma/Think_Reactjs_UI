@@ -16,7 +16,7 @@ const UserProductOrder = () => {
     e.preventDefault();
     const orderObject = {
       userId: shippdata?.user,
-      items: [{ product: product?._id, name: product?.p_name, quantity: parseInt(qty), price: parseInt(product?.price), totalAmount: parseInt(product?.price * product?.quantity * 1) }],
+      items: [{ product: product?._id, name: product?.p_name, quantity: parseInt(qty), price: parseInt(product?.price), totalAmount: parseInt(product?.price * qty) }],
       ShippingAddress: {
         fullName: shippdata?.fullName,
         landMark: shippdata?.landMark,
@@ -37,7 +37,8 @@ const UserProductOrder = () => {
         body: JSON.stringify(orderObject)
       });
       const response = await request.json();
-      if (request.status == false) {
+      console.log(request, response)
+      if (request.ok == false) {
         toast.error(response.message);
       } else {
         toast.success(response.message);
@@ -61,7 +62,6 @@ const UserProductOrder = () => {
           },
           credentials: "include"
         });
-
         const result = await response.json();
         if (result.status_code === 403) {
           toast.error("Session expired, Please Signin now");
