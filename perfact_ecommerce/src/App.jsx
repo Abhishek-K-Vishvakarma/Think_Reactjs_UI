@@ -19,6 +19,7 @@ import AdminLogout from "./adminPannel/AdminLogout";
 import AddToCartItems from "./actionComponents/AddToCartItems";
 import CustomerShippingAddress from "./actionComponents/CustomerShippingAddress";
 import UserProductOrder from "./actionComponents/UserProductOrder";
+import AllProductsItems from "./actionComponents/AllProductsItems";
 function App() {
   return (
     <>
@@ -44,6 +45,7 @@ function App() {
             <Route path="/addtocart" element={<AddToCartItems />}></Route>
             <Route path="/order" element={<UserProductOrder />}></Route>
             <Route path="/shipping" element={<CustomerShippingAddress />}></Route>
+            <Route path="/allproducts" element={<AllProductsItems />}></Route>
           </Routes>
         </BrowserRouter>
       </Authentication>

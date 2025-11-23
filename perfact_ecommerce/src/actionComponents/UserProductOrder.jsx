@@ -85,8 +85,12 @@ const UserProductOrder = () => {
           }
         });
     }, [data]);
-  
-
+    
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = d.getMonth();
+    const ds = d.getDate();
+    const date = `${ds}-${m}-${y}`;
   return (
     <div>
       <Navbar style={{
@@ -112,7 +116,7 @@ const UserProductOrder = () => {
             <br />
             <div className="d-flex text-success">
               <p className="ms-1 text-dark">Customer Details</p>
-              <p className="ms-5 ms-auto">Order Date: {product?.createdAt.toString().slice(0, 10)}</p>
+              <p className="ms-5 ms-auto">Order Date: {date}</p>
               <SlBadge className="text-warning me-2 fs-1"/>
             </div>
             <p style={{ background: 'orange', height: '2px', width: '100%' }}></p>
@@ -141,9 +145,11 @@ const UserProductOrder = () => {
               <p className="mt-2 d-inline-block m5-4"><b>Product Name:</b>&nbsp;{product?.p_name}</p>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <p><strong>Price : ₹</strong> {product?.price}</p>&nbsp;&nbsp;&nbsp;
-                <button style={{ border: '1px solid #E43A36', color: 'red'}}>-</button>&nbsp;&nbsp;
-                <p className="d-flex align-items-center justify-content-center mt-2">1</p>&nbsp;&nbsp;
-                <button style={{ border: '1px solid green', color: 'green' }}>+</button>
+                <div style={{borderRadius: '10px', width: '10rem', border: '2px solid orange', display: 'flex'}}>
+                  <button className="m-auto border-warning">-</button>{' '}
+                  <p>1</p>
+                  <button className="m-auto border-warning">+</button>
+                </div>
               </div>
               <p>{product?.description}</p>
               <h4 className="ms-auto">Total: ₹ {product?.price}</h4>

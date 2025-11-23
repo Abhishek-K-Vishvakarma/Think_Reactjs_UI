@@ -5,11 +5,13 @@ import { ToastContainer, toast } from "react-toastify";
 const GetAdminProduct = () => {
   const [product, setProduct] = useState([]);
   const nmRef = useRef();
+  const p_qtyRef = useRef();
   const desRef = useRef();
   const priceRef = useRef();
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [n, setN] = useState("");
+  const [q, setQ] = useState(1);
   const [d, setD] = useState("");
   const [p, setP] = useState("");
   const [showmodal, setShowModal] = useState(false);
@@ -51,6 +53,7 @@ const GetAdminProduct = () => {
   const setDataforPut = (e) => {
     console.log(e)
     setN(e.p_name);
+    setQ(e.p_qty)
     setD(e.description);
     setP(e.price)
     setId(e._id);
@@ -67,8 +70,9 @@ const GetAdminProduct = () => {
         },
         body: JSON.stringify({
           p_name: nmRef.current.value,
+          p_qty: p_qtyRef.current.value * 1,
           description: desRef.current.value,
-          price: priceRef.current.value
+          price: priceRef.current.value * 1
         })
       });
       const response = await request.json();
@@ -108,7 +112,8 @@ const GetAdminProduct = () => {
                 <div key={e._id} className="card px-3 p-5 mt-4" style={{ margin: '5px', boxShadow: '-5px 5px 5px 2px #ccc' }}>
                   <img src={e.product_img_url} style={{width: '15rem', height: '12rem'}}/><br/>
                   <p><b>ProductName</b>: {e.p_name}</p>
-                  <p><b>Price</b>: {e.price}</p>
+                  <p><b>Qty</b>: {e.p_qty}</p>
+                  <p><b>Price</b>: ₹ {e.price}</p>
                   <p><b>Description</b>: {e.description}</p>
                   <div className="row">
                     <div className="col-6">
@@ -133,6 +138,8 @@ const GetAdminProduct = () => {
               <form onSubmit={PutProduct} className="card p-5">
                 <label>ProductName</label>
                 <input type="text" className="form-control" ref={nmRef} value={n} onChange={(e) => setN(e.target.value)} /><br />
+                <label>Qty</label>
+                <input type="number" className="form-control" ref={p_qtyRef} value={q} onChange={(e) => setQ(e.target.value)} /><br />
                 <label>Description</label>
                 <input type="text" className="form-control" ref={desRef} value={d} onChange={(e) => setD(e.target.value)} /><br />
                 <label>Price</label>

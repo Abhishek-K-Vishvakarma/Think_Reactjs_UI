@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 const Product = () => {
   const nmRef = useRef();
+  const p_qtyRef = useRef();
   const desRef = useRef();
   const categoryId = useRef();
   const subcategoryId = useRef();
@@ -14,6 +15,7 @@ const Product = () => {
   const navigate = useNavigate();
   const ResetForm = () => {
     nmRef.current.value = "";
+    p_qtyRef.current.value = ""
     desRef.current.value = "";
     priceRef.current.value = "";
     categoryId.current.value = "";
@@ -52,7 +54,8 @@ const Product = () => {
         },
         body: JSON.stringify({
           p_name: nmRef.current.value,
-          price: priceRef.current.value,
+          p_qty: p_qtyRef.current.value * 1,
+          price: priceRef.current.value * 1,
           description: desRef.current.value,
           categoryId: categoryId.current.value,
           subcategoryId: subcategoryId.current.value
@@ -94,6 +97,8 @@ const Product = () => {
           <form onSubmit={HandleCategory} className="form-group">
             <label style={{ fontWeight: 'bold' }}>Enter ProductName</label>
             <input type="text" ref={nmRef} className="form-control p-2 fs-5" /><br />
+            <label style={{ fontWeight: 'bold' }}>Enter Quantity</label>
+            <input type="text" ref={p_qtyRef} className="form-control p-2 fs-5" /><br />
             <label style={{ fontWeight: 'bold' }}>Enter Price</label>
             <input type="number" ref={priceRef} className="form-control p-2 fs-5" /><br />
             <label style={{ fontWeight: 'bold' }}>Enter Description</label>

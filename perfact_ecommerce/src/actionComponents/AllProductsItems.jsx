@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { authUser } from "../authentication/Authentication";
 import { Container, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-const UserProduct = () => {
+import { authUser } from "../authentication/Authentication";
+
+const AllProductsItems = () => {
   const [product, setProduct] = useState([]);
   const [users, setUsers] = useState([]);
-  const { subc } = authUser();
+  // const { subc } = authUser();
   const { user, SendProductDataToOrderPage } = authUser();
   const navigate = useNavigate();
   useEffect(() => {
@@ -24,13 +25,12 @@ const UserProduct = () => {
       })
 
   }, []);
-  const filterProduct = product.filter((subId) => {
-    return subc?._id == subId?.subcategory;
-  })
+  // const filterProduct = product.filter((subId) => {
+  //   return subc?._id == subId?.subcategory;
+  // })
   const findUserId = users.find(u => u?.token == user);
   const Addtocart = async (e) => {
     console.log(e);
-
     try {
       const req = await fetch("https://think-api-task-2.onrender.com/api/postcart", {
         method: "POST",
@@ -56,9 +56,9 @@ const UserProduct = () => {
   const ProductDataSendToOrderPage = (productData) => {
     SendProductDataToOrderPage(productData);
     toast.success("Product Page redirect to Order Page!")
-    setTimeout(()=>{
+    setTimeout(() => {
       navigate("/order");
-    },2000);
+    }, 2000);
   }
   return (
     <div>
@@ -74,33 +74,39 @@ const UserProduct = () => {
       }}>
         <Container>
           <Link to="/" className="text-white" style={{ textDecoration: 'none' }}>Home Page</Link>
+          <Link className="text-white" style={{ textDecoration: 'none' }}>Products</Link>
         </Container>
       </Navbar>
-      <div className="container gap-1">
-        {
-          filterProduct.map((product) => {
-            return <>
-              <div className="card py-5 px-5 mt-5" style={{ boxShadow: '-3px 2px 4px 2px #ccc', border: '1px solid blue' }}>
-                <img src={product?.product_img_url} style={{ width: '12rem', height: '12rem' }} />
-                <p className="mt-1"><b>Product:</b> {product.p_name}</p>
-                <p><b>price:</b> ₹ {product.price}</p>
-                {product?.description != "" ? <p><b>Description:</b> {product.description}</p> : null}
-                <div className="row align-items-center justify-content-center">
-                  <div className="col-md-6">
-                    <button onClick={() => ProductDataSendToOrderPage(product)} className="w-100 p-2 mt-1" style={{ background: 'linear-gradient(to left, blue, lightpink)', color: 'white', fontWeight: 'bold', border: 'none' }}>Buy Now</button>
-                  </div>
-                  <div className="col-md-6">
-                    <button onClick={() => Addtocart(product)} className="w-100 p-2 mt-1" style={{ background: 'linear-gradient(to left, blue, lightpink)', color: 'white', fontWeight: 'bold', border: 'none' }}>Add to cart</button>
-                  </div>
-                </div>
+      <div className="container">
+        <div>
+          {
+            product.length == 0
+              ?
+              <div>
+                <h4 className="text-center text-danger mt-5">404: Not Found</h4>
+                <Link to="/" className="mt-4" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Back To Home Page</Link>
               </div>
-            </>
-          })
-        }
+              :
+              product.map((e) => {
+                return <div className="card mt-2 p-2" style={{ boxShadow: '-2px 2px 5px 2px #ccc' }}>
+                  <div style={{ display: 'flex' }}>
+                    <img src={e?.product_img_url} style={{ height: '10rem', width: '10rem', marginLeft: '5rem' }} />
+                    <br />
+                  </div><br />
+                  <p className="text-center"><b>Product:</b> {e?.p_name}</p>
+                  <p className="text-center"><b>Price:</b> ₹ {e?.price}</p>
+                  {e?.description != "" ? < p className="text-center"><b>Description:</b> {e?.description}</p> : null}
+                  <br />
+                  <button onClick={() => ProductDataSendToOrderPage(e)} style={{ background: 'linear-gradient(to right, blue, pink)', border: 'none', padding: '8px', color: '#fff', fontWeight: 'bold' }}>Buy Now</button>
+                  <button onClick={() => Addtocart(e)} style={{ background: 'linear-gradient(to right, blue, pink)', border: 'none', padding: '8px', color: '#fff', fontWeight: 'bold' }} className="mt-1">Add To Cart</button>
+                </div>
+              })
+          }
+        </div>
       </div>
       <ToastContainer />
     </div>
   )
 }
 
-export default UserProduct;
+export default AllProductsItems;

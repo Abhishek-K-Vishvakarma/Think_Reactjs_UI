@@ -57,7 +57,7 @@ const AddToCartItems = () => {
   }
   const carts = cart.filter((u)=>{
     return u?.user?._id == data?._id;
-  })
+  });
   return (
     <div>
       <Navbar style={{
@@ -77,19 +77,27 @@ const AddToCartItems = () => {
       </Navbar>
       <div className="container">
         {
-          carts.map((e) => {
-            return <>
-              <div className="card py-5 px-5 mt-3" style={{boxShadow: '-2px 2px 3px 2px #ccc'}}>
-                <h4>Customer : {e?.user?.name}</h4>
-                <br/>
-                <img src={e?.product_img_url} style={{width: '12rem', height: '12rem'}}/>
-                <p className="mt-2"><b>Product: </b>{e?.product?.p_name}</p>
-                <p><b>Price: </b>{e?.product?.price}</p>
-                <p><b>Description: </b>{e?.product?.description}</p>
-                <button onClick={() => DeleteOneCartItems(e)} style={{border: 'none', background: 'linear-gradient(to left, blue, pink)', padding: '8px', color: 'white', fontWeight: 'bold'}}>Delete</button>
-              </div>
-            </>
-          })
+          carts.length == 0
+          ?
+          <div>
+              <h4 className="text-center mt-5 text-danger">404: Not Found</h4>
+              <br/>
+              <Link to="/allproducts" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Back to Products</Link>
+          </div>
+          :
+            carts.map((e) => {
+              return <>
+                <div className="card py-5 px-5 mt-3" style={{ boxShadow: '-2px 2px 3px 2px #ccc' }}>
+                  <h4>Customer : {e?.user?.name}</h4>
+                  <br />
+                  <img src={e?.product_img_url} style={{ width: '12rem', height: '12rem' }} />
+                  <p className="mt-2"><b>Product: </b>{e?.product?.p_name}</p>
+                  <p><b>Price: </b>{e?.product?.price}</p>
+                  <p><b>Description: </b>{e?.product?.description}</p>
+                  <button onClick={() => DeleteOneCartItems(e)} style={{ border: 'none', background: 'linear-gradient(to left, blue, pink)', padding: '8px', color: 'white', fontWeight: 'bold' }}>Delete</button>
+                </div>
+              </>
+            })
         }
       </div>
       <ToastContainer/>
