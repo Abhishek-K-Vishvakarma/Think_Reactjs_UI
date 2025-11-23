@@ -1,33 +1,31 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { authUser } from "../authentication/Authentication";
 import { Container, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { SlBadge } from "react-icons/sl";
 import { ToastContainer, toast } from "react-toastify";
 const UserProductOrder = () => {
-  const userRef = useRef();
-  const productRef = useRef();
-  const qtyRef = useRef();
-  const streetRef = useRef();
-  const cityRef = useRef();
-  const stateRef = useRef();
-  const postalCodeRef = useRef();
-  const countryRef = useRef();
   const { product, user } = authUser();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [shippdata, setShippData] = useState(false);
+  const [qty, setQty] = useState(1);
+  console.log("Product :", product);
+  console.log("Shipping data :", shippdata)
   const HandleOrder = async (e) => {
     e.preventDefault();
     const orderObject = {
-      userId: userRef.current.value,
-      items: [{ product: productRef.current.value, quantity: qtyRef.current.value }],
+      userId: shippdata?.user,
+      items: [{ product: product?._id, quantity: parseInt(product?.price * qty )}],
       ShippingAddress: {
-        street: streetRef.current.value,
-        city: cityRef.current.value,
-        state: stateRef.current.value,
-        postalCode: postalCodeRef.current.value,
-        country: countryRef.current.value
+        fullName: shippdata?.fullName,
+        landMark: shippdata?.landMark,
+        street: shippdata?.street,
+        contactNumber: shippdata?.contactNumber,
+        city: shippdata?.city,
+        state: shippdata?.state,
+        postalCode: shippdata?.postalCode,
+        country: shippdata?.country
       }
     }
     try {
@@ -44,8 +42,10 @@ const UserProductOrder = () => {
       console.error("Internal Server error :", err);
     }
   }
-  console.log(product);
-
+    let array = []
+    for(let i = 1; i < product?.p_qty; i++){
+        array.push(i);
+     }
   useEffect(() => {
       const Profile = async () => {
         if (!user) return;
@@ -91,6 +91,7 @@ const UserProductOrder = () => {
     const m = d.getMonth();
     const ds = d.getDate();
     const date = `${ds}-${m}-${y}`;
+    console.log(qty);
   return (
     <div>
       <Navbar style={{
@@ -145,16 +146,24 @@ const UserProductOrder = () => {
               <p className="mt-2 d-inline-block m5-4"><b>Product Name:</b>&nbsp;{product?.p_name}</p>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <p><strong>Price : ₹</strong> {product?.price}</p>&nbsp;&nbsp;&nbsp;
-                <div style={{borderRadius: '10px', width: '10rem', border: '2px solid orange', display: 'flex'}}>
-                  <button className="m-auto border-warning">-</button>{' '}
-                  <p>1</p>
+                <div style={{borderRadius: '20px', width: '10rem', border: '2px solid orange', display: 'flex', padding: '5px'}}>
+                  <button className="m-auto border-warning">-</button>&nbsp;&nbsp;
+                  <select value={qty} onChange={(e)=> setQty(e.target.value)}>
+                    {
+                      array.map((ele) => {
+                        return <>
+                          <option>{ele}</option>
+                        </>
+                      })
+                    }
+                  </select>&nbsp;&nbsp;
                   <button className="m-auto border-warning">+</button>
                 </div>
               </div>
-              <p>{product?.description}</p>
-              <h4 className="ms-auto">Total: ₹ {product?.price}</h4>
+              <p className="mt-1"><b>Description:</b> {product?.description}</p>
+              <h4 className="ms-auto">Total: ₹ {parseInt(product?.price * qty)}</h4>
               <p style={{ background: 'orange', height: '2px', width: '100%' }}></p>
-              <button className="btn ms-auto" style={{background: 'orange', color: 'white', fontWeight: 'bold', boxShadow: '0px 0px 5px 1px #ccc'}}>Proceed To Pay</button>
+              <button onClick={HandleOrder} className="btn ms-auto" style={{background: 'orange', color: 'white', fontWeight: 'bold', boxShadow: '0px 0px 5px 1px #ccc'}}>Proceed To Pay</button>
             </div>
           </div>
         </div>
