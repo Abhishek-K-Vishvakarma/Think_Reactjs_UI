@@ -16,7 +16,7 @@ const UserProductOrder = () => {
     e.preventDefault();
     const orderObject = {
       userId: shippdata?.user,
-      items: [{ product: product?._id, name: product?.p_name, quantity: qty, price: product?.price, totalAmount: parseInt(product?.price * product?.quantity) }],
+      items: [{ product: product?._id, name: product?.p_name, quantity: parseInt(qty), price: parseInt(product?.price), totalAmount: parseInt(product?.price * product?.quantity * 1) }],
       ShippingAddress: {
         fullName: shippdata?.fullName,
         landMark: shippdata?.landMark,
