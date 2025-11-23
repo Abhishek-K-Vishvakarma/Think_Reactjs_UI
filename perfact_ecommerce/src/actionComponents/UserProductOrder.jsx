@@ -162,8 +162,7 @@ const UserProductOrder = () => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <p><strong>Price : ₹</strong> {product?.price}</p>&nbsp;&nbsp;&nbsp;
                 <div style={{ borderRadius: '20px', width: '10rem', border: '2px solid orange', display: 'flex', padding: '5px' }}>
-                  <button className="m-auto border-warning">-</button>&nbsp;&nbsp;
-                  <select value={qty} onChange={(e) => setQty(e.target.value)}>
+                  <select value={qty} onChange={(e) => setQty(e.target.value)} style={{margin: 'auto'}}>
                     {
                       array.map((ele) => {
                         return <>
@@ -172,7 +171,6 @@ const UserProductOrder = () => {
                       })
                     }
                   </select>&nbsp;&nbsp;
-                  <button className="m-auto border-warning">+</button>
                 </div>
               </div>
               <p className="mt-1"><b>Description:</b> {product?.description}</p>
