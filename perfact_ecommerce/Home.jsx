@@ -49,7 +49,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!data?._id) return;
-    fetch(`http://localhost:5002/api/shipping/${data._id}`)
+    fetch(`https://think-api-task-2.onrender.com/api/shipping/${data._id}`)
       .then(res => res.json())
       .then((result) => {
         console.log(result);
@@ -134,5 +134,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;

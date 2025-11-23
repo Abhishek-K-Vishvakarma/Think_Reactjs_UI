@@ -30,7 +30,7 @@ const CustomerShippingAddress = () => {
       country: countryRef.current.value
     }
     try {
-      const request = await fetch("http://localhost:5002/api/shippingAddress", {
+      const request = await fetch("https://think-api-task-2.onrender.com/api/shippingAddress", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

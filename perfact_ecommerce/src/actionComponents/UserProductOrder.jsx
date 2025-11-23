@@ -31,7 +31,7 @@ const UserProductOrder = () => {
       }
     }
     try {
-      const request = await fetch("http://localhost:5002/api/order", {
+      const request = await fetch("https://think-api-task-2.onrender.com/api/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -75,7 +75,7 @@ const UserProductOrder = () => {
   
     useEffect(() => {
       if (!data?._id) return;
-      fetch(`http://localhost:5002/api/shipping/${data._id}`)
+      fetch(`https://think-api-task-2.onrender.com/api/shipping/${data._id}`)
         .then(res => res.json())
         .then((result) => {
           console.log(result);
