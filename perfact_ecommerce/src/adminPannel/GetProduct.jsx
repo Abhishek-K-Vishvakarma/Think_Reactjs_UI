@@ -8,6 +8,7 @@ const GetAdminProduct = () => {
   const p_qtyRef = useRef();
   const desRef = useRef();
   const priceRef = useRef();
+  console.log(product)
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [n, setN] = useState("");

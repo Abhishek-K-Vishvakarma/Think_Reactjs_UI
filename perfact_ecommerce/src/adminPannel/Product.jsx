@@ -9,13 +9,13 @@ const Product = () => {
   const categoryId = useRef();
   const subcategoryId = useRef();
   const priceRef = useRef();
-  // const productImageRef = useRef();
+  const productImageRef = useRef();
   const [category, setCategory] = useState([]);
   const [subcategory, setSubCategory] = useState([]);
   const navigate = useNavigate();
   const ResetForm = () => {
     nmRef.current.value = "";
-    p_qtyRef.current.value = ""
+    p_qtyRef.current.value = "";
     desRef.current.value = "";
     priceRef.current.value = "";
     categoryId.current.value = "";
@@ -36,30 +36,31 @@ const Product = () => {
         setSubCategory(data?.data);
       })
   }, []);
-  const HandleCategory = async (e) => {
+  const HandleProduct = async (e) => {
     e.preventDefault();
-    // const file = productImageRef.current.value;
-    // const formData = new FormData();
-    // formData.append("p_name", nmRef.current.value);
-    // formData.append("description", desRef.current.value);
-    // formData.append("categoryId", categoryId.current.value);
-    // formData.append("subcategoryId", subcategoryId.current.value);
-    // formData.append("price", priceRef.current.value);
-    // formData.append("cloudimage", file);
+    const formData = new FormData();
+    formData.append("p_name", nmRef.current.value);
+    formData.append("p_qty", p_qtyRef.current.value);
+    formData.append("description", desRef.current.value);
+    formData.append("categoryId", categoryId.current.value);
+    formData.append("subcategoryId", subcategoryId.current.value);
+    formData.append("price", priceRef.current.value);
+    formData.append("cloudimage", productImageRef.current.files[0]);
     try {
       const request = await fetch("https://think-api-task-2.onrender.com/api/product", {
         method: "POST",
-        headers:{
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          p_name: nmRef.current.value,
-          p_qty: p_qtyRef.current.value * 1,
-          price: priceRef.current.value * 1,
-          description: desRef.current.value,
-          categoryId: categoryId.current.value,
-          subcategoryId: subcategoryId.current.value
-        })
+        body: formData
+        // headers:{
+        //   "Content-Type": "application/json"
+        // },
+        // body: JSON.stringify({
+        //   p_name: nmRef.current.value,
+        //   p_qty: p_qtyRef.current.value * 1,
+        //   price: priceRef.current.value * 1,
+        //   description: desRef.current.value,
+        //   categoryId: categoryId.current.value,
+        //   subcategoryId: subcategoryId.current.value
+        // })
       });
       const response = await request.json();
       if (request.status == 500) {
@@ -94,7 +95,7 @@ const Product = () => {
       </Navbar>
       <div className="container">
         <div className="card p-5 mt-5" style={{ boxShadow: '-5px 5px 4px 2px #ccc' }}>
-          <form onSubmit={HandleCategory} className="form-group">
+          <form onSubmit={HandleProduct} className="form-group">
             <label style={{ fontWeight: 'bold' }}>Enter ProductName</label>
             <input type="text" ref={nmRef} className="form-control p-2 fs-5" /><br />
             <label style={{ fontWeight: 'bold' }}>Enter Quantity</label>
@@ -103,8 +104,8 @@ const Product = () => {
             <input type="number" ref={priceRef} className="form-control p-2 fs-5" /><br />
             <label style={{ fontWeight: 'bold' }}>Enter Description</label>
             <textarea type="text" ref={desRef} className="form-control p-2 fs-5" /><br />
-            {/* <label>Choose Image File</label>
-            <input type="file" accept="/*" ref={productImageRef} className="form-control p-2"/><br/> */}
+            <label>Choose Image File</label>
+            <input type="file" accept="/*" ref={productImageRef} className="form-control p-2"/><br/>
             <label style={{ fontWeight: 'bold' }}>Choose Category</label>
             <select type="text" ref={categoryId} className="form-control p-2 fs-5">
               <option value="">Choose Category</option>

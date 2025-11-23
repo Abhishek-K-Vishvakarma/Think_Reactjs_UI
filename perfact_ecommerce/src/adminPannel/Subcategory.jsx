@@ -28,12 +28,13 @@ const SubCategory = () => {
     const formData = new FormData();
     formData.append("sub_name", nmRef.current.value);
     formData.append("description", desRef.current.value);
-    formData.append("category", categoryId.current.value);
-    formData.append("cloudimage", file);
+    formData.append("categoryId", categoryId.current.value); 
+    formData.append("cloudimage", sub_img_urlRef.current.files[0]);
+
     try {
       const request = await fetch("https://think-api-task-2.onrender.com/api/subcategory", {
         method: "POST",
-        formData
+        body : formData
       });
       const response = await request.json();
       if(request.status == 500){
