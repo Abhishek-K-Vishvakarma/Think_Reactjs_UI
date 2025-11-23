@@ -6,7 +6,8 @@ const Authentication = ({ children }) => {
   const [user, setUser] = useState(null);
   const [subc, setSubC] = useState(null);
   const [product, setProduct] = useState(null);
-
+  const [order, setOrder] = useState(null);
+  const [paycomplete, setPayComplete] = useState({});
   useEffect(() => {
     let token = localStorage.getItem("token");
     if (token) {
@@ -21,6 +22,15 @@ const Authentication = ({ children }) => {
     if (product) {
       setProduct(JSON.parse(product));
       console.log("Product form auth :", product);
+    }
+    let orderData = localStorage.getItem("order");
+    if(orderData){
+       setOrder(JSON.parse(orderData));
+    }
+    let payCompletion = localStorage.getItem("paymentCompletionProcess");
+    if(payCompletion){
+       setPayComplete(JSON.parse(payCompletion));
+      console.log("Auth Payment", payCompletion)
     }
   }, []);
 
@@ -39,8 +49,18 @@ const Authentication = ({ children }) => {
     setProduct(product);
   }
 
+  const OrderData = (order) => {
+    localStorage.setItem("order", JSON.stringify(order));
+    setOrder(order);
+  }
+
+  const PaymentComplete = (payment)=>{
+    localStorage.setItem("paymentCompletionProcess", JSON.stringify(payment));
+    setPayComplete(payment);
+  }
+
   return (
-    <Authcontext.Provider value={{ User, user, subcategorySender, subc, SendProductDataToOrderPage, product }}>
+    <Authcontext.Provider value={{ User, user, subcategorySender, subc, SendProductDataToOrderPage, product, OrderData, order, PaymentComplete, paycomplete }}>
       {children}
     </Authcontext.Provider>
   );

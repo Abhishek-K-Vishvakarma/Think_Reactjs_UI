@@ -5,18 +5,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { SlBadge } from "react-icons/sl";
 import { ToastContainer, toast } from "react-toastify";
 const UserProductOrder = () => {
-  const { product, user } = authUser();
-  const navigate = useNavigate();
+  const { product, user, OrderData } = authUser();
   const [data, setData] = useState(null);
   const [shippdata, setShippData] = useState(false);
   const [qty, setQty] = useState(1);
-  console.log("Product :", product);
-  console.log("Shipping data :", shippdata)
+  const navigate = useNavigate();
   const HandleOrder = async (e) => {
     e.preventDefault();
     const orderObject = {
       userId: shippdata?.user,
-      items: [{ product: product?._id, name: product?.p_name, quantity: parseInt(qty), price: parseInt(product?.price), totalAmount: parseInt(product?.price * qty) }],
+      items: [
+        {
+          product: product?._id,
+          name: product?.p_name,
+          quantity: parseInt(qty),
+          price: parseInt(product?.price),
+          totalPrice: parseInt(product?.price * qty)
+        }
+      ],
+
       ShippingAddress: {
         fullName: shippdata?.fullName,
         landMark: shippdata?.landMark,
@@ -24,10 +31,10 @@ const UserProductOrder = () => {
         contactNumber: shippdata?.contactNumber,
         city: shippdata?.city,
         state: shippdata?.state,
-        postalCode: shippdata?.postalCode,
-        country: shippdata?.country
+        zipCode: shippdata?.postalCode,
+        country: shippdata?.country,
       }
-    }
+    };
     try {
       const request = await fetch("https://think-api-task-2.onrender.com/api/order", {
         method: "POST",
@@ -37,11 +44,15 @@ const UserProductOrder = () => {
         body: JSON.stringify(orderObject)
       });
       const response = await request.json();
+      OrderData(response);
       console.log(request, response)
       if (request.ok == false) {
         toast.error(response.message);
       } else {
         toast.success(response.message);
+        setTimeout(()=>{
+        navigate("/orderPayment");
+        },2000);
       }
     } catch (err) {
       console.error("Internal Server error :", err);

@@ -20,6 +20,8 @@ import AddToCartItems from "./actionComponents/AddToCartItems";
 import CustomerShippingAddress from "./actionComponents/CustomerShippingAddress";
 import UserProductOrder from "./actionComponents/UserProductOrder";
 import AllProductsItems from "./actionComponents/AllProductsItems";
+import OrderPayment from "./actionComponents/OrderPayment";
+import PaymentInvoice from "./actionComponents/PaymentInvoice";
 function App() {
   return (
     <>
@@ -46,6 +48,8 @@ function App() {
             <Route path="/order" element={<UserProductOrder />}></Route>
             <Route path="/shipping" element={<CustomerShippingAddress />}></Route>
             <Route path="/allproducts" element={<AllProductsItems />}></Route>
+            <Route path="/orderPayment" element={<OrderPayment />}></Route>
+            <Route path="/invoice" element={<PaymentInvoice />}></Route>
           </Routes>
         </BrowserRouter>
       </Authentication>
