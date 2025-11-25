@@ -17,13 +17,9 @@ const UserProductOrder = () => {
       items: [
         {
           product: product?._id,
-          name: product?.p_name,
           quantity: parseInt(qty),
-          price: parseInt(product?.price),
-          totalPrice: parseInt(product?.price * qty)
         }
       ],
-
       ShippingAddress: {
         fullName: shippdata?.fullName,
         landMark: shippdata?.landMark,
@@ -106,7 +102,7 @@ const UserProductOrder = () => {
   const m = d.getMonth();
   const ds = d.getDate();
   const date = `${ ds }-${ m }-${ y }`;
-  console.log(qty);
+  console.log(product);
   return (
     <div>
       <Navbar style={{
