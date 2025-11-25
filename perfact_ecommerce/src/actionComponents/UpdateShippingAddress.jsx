@@ -11,7 +11,6 @@ const UpdateShippingAddress = ({ data, setShowModel }) => {
   const [stateValue, setStateValue] = useState("");
   const [country, setCountry] = useState("");
   const navigate = useNavigate();
-  // const [show, setShow] = useState(false);
   useEffect(() => {
     if (data) {
       setName(data.fullName);
@@ -68,7 +67,7 @@ const UpdateShippingAddress = ({ data, setShowModel }) => {
           null :
         
           <div className="container mt-4">
-            <form onSubmit={HandleShippingUpdate} className="card p-3" style={{ maxHeight: '600px', overflowY: 'auto'}}>
+            <form onSubmit={HandleShippingUpdate} className="card p-3" style={{ maxHeight: '700px', overflowY: 'auto'}}>
               <button
                 type="button"
                 className="btn btn-close text-white"
