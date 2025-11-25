@@ -22,6 +22,7 @@ import UserProductOrder from "./actionComponents/UserProductOrder";
 import AllProductsItems from "./actionComponents/AllProductsItems";
 import OrderPayment from "./actionComponents/OrderPayment";
 import PaymentInvoice from "./actionComponents/PaymentInvoice";
+// import UpdateShippingAddress from "./actionComponents/UpdateShippingAddress";
 function App() {
   return (
     <>
@@ -50,6 +51,7 @@ function App() {
             <Route path="/allproducts" element={<AllProductsItems />}></Route>
             <Route path="/orderPayment" element={<OrderPayment />}></Route>
             <Route path="/invoice" element={<PaymentInvoice />}></Route>
+            {/* <Route path="/updateShipping" element={<UpdateShippingAddress />}></Route> */}
           </Routes>
         </BrowserRouter>
       </Authentication>
